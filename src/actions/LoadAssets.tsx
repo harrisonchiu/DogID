@@ -3,15 +3,15 @@ import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
 
 import { Time } from '@actions/Log';
 
-const modelJson = require('@assets/efficientnetb1-noisystudent-tfjs/model.json');
+const modelJson = require('@assets/Models/efficientnetb1-noisystudent-tfjs/model.json');
 const modelWeights: any[] = [
-    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard1of7.bin'),
-    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard2of7.bin'),
-    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard3of7.bin'),
-    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard4of7.bin'),
-    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard5of7.bin'),
-    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard6of7.bin'),
-    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard7of7.bin'),
+    require('@assets/Models/efficientnetb1-noisystudent-tfjs/group1-shard1of7.bin'),
+    require('@assets/Models/efficientnetb1-noisystudent-tfjs/group1-shard2of7.bin'),
+    require('@assets/Models/efficientnetb1-noisystudent-tfjs/group1-shard3of7.bin'),
+    require('@assets/Models/efficientnetb1-noisystudent-tfjs/group1-shard4of7.bin'),
+    require('@assets/Models/efficientnetb1-noisystudent-tfjs/group1-shard5of7.bin'),
+    require('@assets/Models/efficientnetb1-noisystudent-tfjs/group1-shard6of7.bin'),
+    require('@assets/Models/efficientnetb1-noisystudent-tfjs/group1-shard7of7.bin'),
 ]
 
 const breedNames: string[] = [
