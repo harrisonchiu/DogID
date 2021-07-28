@@ -4,10 +4,12 @@
     "baseUrl": ".",
     "paths": {
       "@root/*": ["./*"],
+      "@assets/*": ["assets/*"],
+      "@src/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@screens/*": ["src/screens/*"],
       "@actions/*": ["src/actions/*"],
-      "@assets/*": ["assets/*"]
+      "@config/*": ["src/config/*"],
     },
     "strict": true
   },

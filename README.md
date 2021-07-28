@@ -3,9 +3,34 @@
 ## Feel free to edit/add to this
 
 ### Coding Style
-Follow Airbnb's React Style Guide: https://github.com/airbnb/javascript/tree/master/react \
-Follow Google's JavaScript Style Guide for everything else (Airbnb's style overrides this): https://google.github.io/styleguide/jsguide.html \
+Follow Airbnb's React Style Guide:\
+https://github.com/airbnb/javascript/tree/master/react
+
+Follow Google's TypeScript and JavaScript Style Guide:\
+https://google.github.io/styleguide/tsguide.html\
+https://google.github.io/styleguide/jsguide.html
+
+Follow in order of precedence: Airbnb's React/JSX, Google's TypeScript, Google's JavaScript
+
 Use `K&R (One True Brace Style variant)`.
 
 Exceptions to Google's and Airbnb's Style Guide:
-- No abbreviations except for `id`\
+- No abbreviations except for `id`, `params` (for parameters)
+
+### TODO
+- Camera options
+    - Zoom, flash, ratios, front camera, save image
+- Finish UI
+- Detect when image probably does not contain a dog
+- API to optionally send images or other data if prediction is incorrect/correct, to increase dataset
+- API to run big model on server
+- Details screen of dog
+    - API calls to get information
+    - Can search for other dogs
+    - Save user searches locally
+- Object detection
+    - Detects on captured picture
+    - Detects on captured video
+    - Detects on local saved picture and video
+    - Detects on streamed camera data
+- Option to use locally saved image

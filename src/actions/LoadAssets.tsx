@@ -1,18 +1,20 @@
 import * as tf from '@tensorflow/tfjs';
 import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
 
-const modelJson = require('@root/tfjs_model/model.json')
-const modelWeights = [
-    require('@root/tfjs_model/group1-shard1of7.bin'),
-    require('@root/tfjs_model/group1-shard2of7.bin'),
-    require('@root/tfjs_model/group1-shard3of7.bin'),
-    require('@root/tfjs_model/group1-shard4of7.bin'),
-    require('@root/tfjs_model/group1-shard5of7.bin'),
-    require('@root/tfjs_model/group1-shard6of7.bin'),
-    require('@root/tfjs_model/group1-shard7of7.bin'),
+import { Time } from '@actions/Log';
+
+const modelJson = require('@assets/efficientnetb1-noisystudent-tfjs/model.json');
+const modelWeights: any[] = [
+    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard1of7.bin'),
+    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard2of7.bin'),
+    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard3of7.bin'),
+    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard4of7.bin'),
+    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard5of7.bin'),
+    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard6of7.bin'),
+    require('@assets/efficientnetb1-noisystudent-tfjs/group1-shard7of7.bin'),
 ]
 
-const breedNames: Array<string> = [
+const breedNames: string[] = [
     'Afghan Hound',
     'African Hunting Dog',
     'Airedale',
@@ -146,22 +148,28 @@ const breedNames: Array<string> = [
 ]
 
 
-export const loadTensorflow = async() => {
+const loadTensorflow = async(): Promise<void> => {
+    console.log(Time() + '[INFO] Started loading tensorflow')
     await tf.ready()
+    console.log(Time() + '[INFO] Finished loading tensorflow')
 }
 
 
+// initially undefined
 let loadedModel: tf.GraphModel
-export const loadModel = async() => {
-    loadedModel = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights))
 
-    // For some reason it, the model must be used once before it really loads
-    // First predict takes 5 seconds, it is much quicker after the first predict
+const loadModel = async(): Promise<void> => {
+    loadedModel = await tf.loadGraphModel(
+        bundleResourceIO(modelJson, modelWeights)
+    );
+
+    console.log(Time() + '[INFO] Started loading the model')
     try {
-        loadedModel.predict(tf.zeros([1, 240, 240, 3], 'float32'))
+        loadedModel.predict(tf.zeros([1, 240, 240, 3]));
     } catch (error) {
-        console.log("Failed to do first prediction" + error)
+        console.log(Time() + '[ERROR] Failed to do first prediction' + error);
     }
+    console.log(Time() + '[INFO] Finished loading the model')
 }
 
-export { breedNames, loadedModel }
+export { breedNames, loadTensorflow, loadModel, loadedModel };
