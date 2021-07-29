@@ -156,8 +156,8 @@ class CameraScreen extends Component<Props, States> {
                         ref={(ref) => { this.camera = ref }}
                     />
                     <View style={[styles.cameraBottomBar, { height: this.state.bottomCameraBarHeight }]}>
-                        <View style={{ flex: 0.8 }} />
-                        <View style={{ flex: 1, alignItems: 'center', height: '100%', width: '100%' }}>
+                        <View style={styles.buttonsTopPaddingBar} />
+                        <View style={styles.buttonsContainer}>
                             <Animated.View 
                                 style={[
                                     styles.captureButtonContainer, {

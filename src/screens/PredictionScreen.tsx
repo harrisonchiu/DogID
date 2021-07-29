@@ -144,7 +144,7 @@ class PredictionScreen extends Component<Props, States> {
         return (
             <View style={styles.screenContainer}>
                 <StatusBar hidden />
-                <View style={[styles.cameraTopBar, { height: this.params.topCameraBarHeight }]} />
+                <View style={[styles.predictionTopBar, { height: this.params.topCameraBarHeight }]} />
                 <Animated.Image
                     style={{
                         height: this.params.cameraHeight,
@@ -155,7 +155,7 @@ class PredictionScreen extends Component<Props, States> {
                 />
                 <Animated.View
                     style={[
-                        styles.cameraBottomBar, {
+                        styles.predictionContainer, {
                             height: this.state.bottomBarFinalHeight,
                             transform: [{ translateY: this.bottomBarAnimation }],
                         }
@@ -168,7 +168,7 @@ class PredictionScreen extends Component<Props, States> {
                             style={[
                                 styles.predictionScrollView, {
                                     transform: [{ translateX: this.scrollViewAnimation }],
-                                    width: '100%'
+                                    width: "100%",
                                 }
                             ]}
                             contentContainerStyle={{

@@ -7,7 +7,7 @@ import {
     Image,
 } from 'react-native';
 
-import { StyleColours } from '@config/Colours';
+import { cardStyles } from '@config/Styles';
 import { BreedPictures } from '@components/BreedPictures'
 
 
@@ -27,15 +27,15 @@ class Cards extends Component<Props> {
         return (
             <View
                 style={[
-                    styles.cardContainer, {
+                    cardStyles.cardContainer, {
                         paddingLeft: this.props.cardWidth * 0.03,
                         paddingRight: this.props.cardWidth * 0.03,
-                        width: this.props.cardWidth
+                        width: this.props.cardWidth,
                     }
                 ]}
             >
-                <View style={styles.card}> 
-                    <View style={styles.profilePicture}>
+                <View style={cardStyles.card}> 
+                    <View style={cardStyles.profilePicture}>
                         <Image
                             style={{
                                 height: '100%',
@@ -44,56 +44,22 @@ class Cards extends Component<Props> {
                             source={this.breedPicture}
                         />
                     </View>
-                    <View
-                        style={[
-                            styles.profileInformation, {
-                                padding: this.props.cardWidth * 0.03
-                            }
-                        ]}
-                    >
-                        <Text style={styles.predictedBreedName}>
-                            {this.props.breedName}
-                        </Text>
-                        <Text style={styles.predictedProbability}>
-                            {this.probabilityText}
-                        </Text>
+                    <View style={cardStyles.profileInformation}>
+                        <View style={cardStyles.profileBreedName}>
+                            <Text style={cardStyles.predictedBreedNameText}>
+                                {this.props.breedName}
+                            </Text>
+                        </View>
+                        <View style={cardStyles.profileBreedProbability}>
+                            <Text style={cardStyles.predictedBreedProbabilityText}>
+                                {this.probabilityText}
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </View>
         );
     }
 }
-
-
-const styles = StyleSheet.create({
-    cardContainer: {
-        flex: 1,
-        backgroundColor: StyleColours.cardBackground,
-    },
-    card: {
-        flex: 1,
-        backgroundColor: StyleColours.card,
-        borderRadius: 25,
-        overflow: 'hidden',
-    },
-    profilePicture: {
-        flex: 1,
-        backgroundColor: StyleColours.profilePictureBackground,
-    },
-    profileInformation: {
-        flex: 0.25,
-        alignItems: 'flex-start',
-        justifyContent: 'space-evenly',
-        backgroundColor: StyleColours.profileInformationBackground,
-    },
-    predictedBreedName: {
-        flexShrink: 1,
-        fontSize: 22,
-    },
-    predictedProbability: {
-        fontSize: 18,
-    },
-});
-
 
 export default Cards;

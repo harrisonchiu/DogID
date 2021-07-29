@@ -313,21 +313,5 @@ const Colours = {
 
 const primary = 500;
 
-const LightTheme = {
-    screenBackground: Colours.black,
-    screenBackgroundWithText: Colours.lightGreen[500],
 
-    cameraTopBar: Colours.gray[900],
-    cameraBottomBar: Colours.gray[900],
-    captureButtonContainer: Colours.transparent,
-    captureButton: Colours.red[500],
-
-    predictionScrollViewBackground: Colours.transparent,
-
-    cardBackground: Colours.transparent,
-    card: Colours.white,
-    profilePictureBackground: Colours.red[400],
-    profileInformationBackground: Colours.green[200],
-}
-
-export { Colours, LightTheme as StyleColours }
+export { Colours }

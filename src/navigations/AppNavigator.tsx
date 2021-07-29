@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import LoadingScreen from '@screens/LoadingScreen';
@@ -8,7 +8,7 @@ import CameraScreen from '@screens/CameraScreen';
 import PredictionScreen from '@screens/PredictionScreen';
 
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 
 // TODO: different transitions for different pages
@@ -18,13 +18,13 @@ const AppNavigator = () => {
             initialRouteName="LoadingScreen"
             screenOptions={{
                 headerShown: false,
-                gestureEnabled: true,
-                stackAnimation: "none",
+                // gestureEnabled: true,
+                // stackAnimation: "none",
             }}
         >
             <Stack.Screen name="LoadingScreen" component={ LoadingScreen } />
-            <Stack.Screen name="CameraScreen" component={ CameraScreen } />
-            <Stack.Screen name="PredictionScreen" component={ PredictionScreen } />
+            <Stack.Screen name="CameraScreen" component={ CameraScreen } options={{ cardStyleInterpolator: undefined }} />
+            <Stack.Screen name="PredictionScreen" component={ PredictionScreen } options={{ cardStyleInterpolator: undefined }} />
         </Stack.Navigator>
     )
 }
