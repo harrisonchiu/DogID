@@ -30,6 +30,7 @@ interface Props {
 interface States {
     screenHeight: number,
     screenWidth: number,
+    artificialPredictionDelay: number,
     showPredictionsAnimationDuration: number,
     initialAnimationDelay: number,
     initialAnimationDuration: number,
@@ -46,10 +47,11 @@ class PredictionScreen extends Component<Props, States> {
             screenHeight: Dimensions.get('window').height,
             screenWidth: Dimensions.get('window').width,
 
-            showPredictionsAnimationDuration: 500,
+            artificialPredictionDelay: 3000,
+            showPredictionsAnimationDuration: 300,
 
             initialAnimationDelay: 900,
-            initialAnimationDuration: 400,
+            initialAnimationDuration: 300,
             bottomBarFinalHeight: 6 * Dimensions.get('window').height / 10,
 
             isLoadingDone: false,
@@ -135,7 +137,7 @@ class PredictionScreen extends Component<Props, States> {
                         console.log(Time() + '[WARN] Navigation was not in focus when setting isLoadingDone state')
                         console.log(Time() + '[WARN] User likely cancelled prediction before prediction was done')
                     }
-                }, 3000);
+                }, this.state.artificialPredictionDelay);
             });
         }
     }
@@ -161,48 +163,62 @@ class PredictionScreen extends Component<Props, States> {
                         }
                     ]}
                 >
-                    <View style={styles.predictionScrollViewTopBar} />
-
                     {this.state.isLoadingDone === true ? (
                         <Animated.ScrollView
                             style={[
                                 styles.predictionScrollView, {
-                                    transform: [{ translateX: this.scrollViewAnimation }],
                                     width: "100%",
+                                    transform: [{ translateX: this.scrollViewAnimation }],
                                 }
                             ]}
+
+                            // To center the card in the view:
+                            // Assume padding is reference to one side of padding and paddingLeft == paddingRight
+                            // (1 - Percentage of cardWidth) / 2 = contentContainerPadding + cardPadding
+                            // contentContainerPadding + cardPadding = 2 * cardPadding + visual of next card
                             contentContainerStyle={{
                                 alignItems: "center",
+                                justifyContent: "center",
                                 paddingLeft: this.state.screenWidth * 0.05,
                                 paddingRight: this.state.screenWidth * 0.05,
                             }}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
-                            overScrollMode={"never"}
+                            overScrollMode="never"
                             decelerationRate={0.96}
                         >
                             <Cards
-                                cardWidth={this.state.screenWidth * 0.88}
+                                cardPaddingLeft={this.state.screenWidth * 0.03}
+                                cardPaddingRight={this.state.screenWidth * 0.03}
+                                cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][0]}
                                 probability={this.state.predictions[1][0]}
                             />
                             <Cards
-                                cardWidth={this.state.screenWidth * 0.88}
+                                cardPaddingLeft={this.state.screenWidth * 0.03}
+                                cardPaddingRight={this.state.screenWidth * 0.03}
+                                cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][1]}
                                 probability={this.state.predictions[1][1]}
                             />
                             <Cards
-                                cardWidth={this.state.screenWidth * 0.88}
+                                cardPaddingLeft={this.state.screenWidth * 0.03}
+                                cardPaddingRight={this.state.screenWidth * 0.03}
+                                cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][2]}
                                 probability={this.state.predictions[1][2]}
                             />
                             <Cards
-                                cardWidth={this.state.screenWidth * 0.88}
+                                cardPaddingLeft={this.state.screenWidth * 0.03}
+                                cardPaddingRight={this.state.screenWidth * 0.03}
+                                cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][3]}
                                 probability={this.state.predictions[1][3]}
                             />
                             <Cards
-                                cardWidth={this.state.screenWidth * 0.88}
+                                cardPaddingLeft={this.state.screenWidth * 0.03}
+                                cardPaddingRight={this.state.screenWidth * 0.03}
+                                cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][4]}
                                 probability={this.state.predictions[1][4]}
                             />
@@ -210,8 +226,6 @@ class PredictionScreen extends Component<Props, States> {
                     ) : (
                         <LottieView source={loadingAnimation} autoPlay loop />
                     )}
-
-                    <View style={styles.predictionScrollViewBottomBar} />
                 </Animated.View>
             </View>
         );

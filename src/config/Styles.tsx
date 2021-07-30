@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     },
     predictionContainer: {
         alignItems: 'center',
-        backgroundColor: Colours.white,
+        backgroundColor: '#f8f6f3',
     },
     predictionScrollView: {
         flex: 1,
@@ -71,49 +71,4 @@ const styles = StyleSheet.create({
 });
 
 
-const cardStyles = StyleSheet.create({
-    cardContainer: {
-        flex: 1,
-        backgroundColor: Colours.transparent,
-    },
-    card: {
-        flex: 0.95,
-        backgroundColor: Colours.white,
-        borderRadius: 20,
-        overflow: 'hidden',
-        elevation: 6,
-    },
-    profilePicture: {
-        flex: 1,
-        backgroundColor: Colours.white,
-    },
-    profileInformation: {
-        flex: 0.36,
-        alignItems: 'flex-start',
-        backgroundColor: Colours.green[500],
-    },
-    profileBreedName: {
-        flex: 0.4,
-        paddingTop: 15,
-        paddingLeft: 15,
-        height: '100%',
-        width: '100%',
-        backgroundColor: Colours.transparent,
-    },
-    profileBreedProbability: {
-        flex: 0.6,
-        paddingLeft: 15,
-        height: '100%',
-        width: '100%',
-        backgroundColor: Colours.transparent,
-    },
-    predictedBreedNameText: {
-        flexShrink: 1,
-        fontSize: 20,
-    },
-    predictedBreedProbabilityText: {
-        fontSize: 16,
-    },
-});
-
-export { styles, cardStyles };
+export { styles };

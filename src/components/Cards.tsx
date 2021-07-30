@@ -6,16 +6,23 @@ import {
     StyleSheet,
     Image,
 } from 'react-native';
+import {
+    Card,
+    Title,
+    Paragraph,
+} from 'react-native-paper';
 
-import { cardStyles } from '@config/Styles';
+import { Colours } from '@config/Colours';
 import { BreedPictures } from '@components/BreedPictures'
 
 
 interface Props {
     onPressAction?: any,
+    cardPaddingLeft: number,
+    cardPaddingRight: number,
+    cardWidth: number,
     breedName: string,
     probability: number,
-    cardWidth: number,
 }
 
 
@@ -26,37 +33,46 @@ class Cards extends Component<Props> {
     render() {
         return (
             <View
-                style={[
-                    cardStyles.cardContainer, {
-                        paddingLeft: this.props.cardWidth * 0.03,
-                        paddingRight: this.props.cardWidth * 0.03,
-                        width: this.props.cardWidth,
-                    }
-                ]}
+                style={{
+                    paddingLeft: this.props.cardPaddingLeft,
+                    paddingRight: this.props.cardPaddingRight,
+                }}
             >
-                <View style={cardStyles.card}> 
-                    <View style={cardStyles.profilePicture}>
-                        <Image
-                            style={{
-                                height: '100%',
-                                width: '100%',
-                            }}
-                            source={this.breedPicture}
-                        />
-                    </View>
-                    <View style={cardStyles.profileInformation}>
-                        <View style={cardStyles.profileBreedName}>
-                            <Text style={cardStyles.predictedBreedNameText}>
-                                {this.props.breedName}
-                            </Text>
-                        </View>
-                        <View style={cardStyles.profileBreedProbability}>
-                            <Text style={cardStyles.predictedBreedProbabilityText}>
-                                {this.probabilityText}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
+                <Card 
+                    style={{
+                        height: '80%',
+                        width: this.props.cardWidth,
+                        borderRadius: 12,
+                        overflow: 'hidden',
+                        elevation: 6,
+                    }}
+                    elevation={5}
+                >
+                    <Card.Cover
+                        style={{
+                            height: '80%',
+                            width: '100%',
+                        }}
+                        source={this.breedPicture}
+                    />
+                    <Card.Title
+                        style={{
+                            backgroundColor: 'lightgreen',
+                        }}
+                        titleStyle={{
+                            fontSize: 21,  // default is 20
+                            fontWeight: 'bold',
+                        }}
+                        subtitleStyle={{
+                            fontSize: 16,
+                        }}
+                        title={this.props.breedName}
+                        subtitle={this.probabilityText}
+                    />
+                    <Card.Content style={{ backgroundColor: 'lightgreen' }}>
+                        <View />
+                    </Card.Content>
+                </Card>
             </View>
         );
     }

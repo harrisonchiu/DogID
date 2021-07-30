@@ -23,8 +23,8 @@ const AppNavigator = () => {
             }}
         >
             <Stack.Screen name="LoadingScreen" component={ LoadingScreen } />
-            <Stack.Screen name="CameraScreen" component={ CameraScreen } options={{ cardStyleInterpolator: undefined }} />
-            <Stack.Screen name="PredictionScreen" component={ PredictionScreen } options={{ cardStyleInterpolator: undefined }} />
+            <Stack.Screen name="CameraScreen" component={ CameraScreen } options={{ animationEnabled: false }} />
+            <Stack.Screen name="PredictionScreen" component={ PredictionScreen } options={{ animationEnabled: false }} />
         </Stack.Navigator>
     )
 }
