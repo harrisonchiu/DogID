@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import LoadingScreen from '@screens/LoadingScreen';
 import CameraScreen from '@screens/CameraScreen';
 import PredictionScreen from '@screens/PredictionScreen';
+import BreedDetailsScreen from '@screens/BreedDetailsScreen';
 
 
 const Stack = createStackNavigator();
@@ -18,13 +19,15 @@ const AppNavigator = () => {
             initialRouteName="LoadingScreen"
             screenOptions={{
                 headerShown: false,
-                // gestureEnabled: true,
-                // stackAnimation: "none",
+                gestureEnabled: true,
+                cardOverlayEnabled: true,
             }}
+            mode="modal"
         >
-            <Stack.Screen name="LoadingScreen" component={ LoadingScreen } />
-            <Stack.Screen name="CameraScreen" component={ CameraScreen } options={{ animationEnabled: false }} />
-            <Stack.Screen name="PredictionScreen" component={ PredictionScreen } options={{ animationEnabled: false }} />
+            <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
+            <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ animationEnabled: false }} />
+            <Stack.Screen name="PredictionScreen" component={PredictionScreen} options={{ animationEnabled: false }} />
+            <Stack.Screen name="BreedDetailsScreen" component={BreedDetailsScreen} options={{ ...TransitionPresets.ModalSlideFromBottomIOS }} />
         </Stack.Navigator>
     )
 }

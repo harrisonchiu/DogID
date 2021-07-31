@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
-    Image,
 } from 'react-native';
 import {
     Card,
-    Title,
-    Paragraph,
 } from 'react-native-paper';
 
 import { Colours } from '@config/Colours';
@@ -23,12 +17,17 @@ interface Props {
     cardWidth: number,
     breedName: string,
     probability: number,
+    navigation?: any,
 }
 
 
 class Cards extends Component<Props> {
     private probabilityText: string = 'Probability: ' + this.props.probability + '%'
     private breedPicture: any = BreedPictures[this.props.breedName]
+
+    private transitionToBreedDetailsScreen = (): void => {
+        this.props.navigation.push('BreedDetailsScreen')
+    }
 
     render() {
         return (
@@ -40,28 +39,28 @@ class Cards extends Component<Props> {
             >
                 <Card 
                     style={{
-                        height: '80%',
+                        height: "80%",
                         width: this.props.cardWidth,
                         borderRadius: 12,
-                        overflow: 'hidden',
-                        elevation: 6,
+                        overflow: "hidden",
                     }}
-                    elevation={5}
+                    elevation={8}
+                    onPress={this.transitionToBreedDetailsScreen}
                 >
                     <Card.Cover
                         style={{
-                            height: '80%',
-                            width: '100%',
+                            height: "80%",
+                            width: "100%",
                         }}
                         source={this.breedPicture}
                     />
                     <Card.Title
                         style={{
-                            backgroundColor: 'lightgreen',
+                            backgroundColor: "lightgreen",
                         }}
                         titleStyle={{
                             fontSize: 21,  // default is 20
-                            fontWeight: 'bold',
+                            fontWeight: "bold",
                         }}
                         subtitleStyle={{
                             fontSize: 16,
@@ -69,7 +68,7 @@ class Cards extends Component<Props> {
                         title={this.props.breedName}
                         subtitle={this.probabilityText}
                     />
-                    <Card.Content style={{ backgroundColor: 'lightgreen' }}>
+                    <Card.Content style={{ backgroundColor: "lightgreen" }}>
                         <View />
                     </Card.Content>
                 </Card>

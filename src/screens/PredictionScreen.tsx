@@ -193,8 +193,9 @@ class PredictionScreen extends Component<Props, States> {
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][0]}
                                 probability={this.state.predictions[1][0]}
+                                navigation={this.props.navigation}
                             />
-                            <Cards
+                            {/* <Cards
                                 cardPaddingLeft={this.state.screenWidth * 0.03}
                                 cardPaddingRight={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
@@ -221,7 +222,7 @@ class PredictionScreen extends Component<Props, States> {
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][4]}
                                 probability={this.state.predictions[1][4]}
-                            />
+                            /> */}
                         </Animated.ScrollView>
                     ) : (
                         <LottieView source={loadingAnimation} autoPlay loop />

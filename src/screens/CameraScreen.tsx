@@ -29,6 +29,7 @@ interface States {
     cameraWidth: number,
     cameraRatio: string,
     isCameraRatioReady: boolean,
+    capturedPhotoUri: string,
     isScreenFocused: boolean,
 }
 
@@ -44,6 +45,8 @@ class CameraScreen extends Component<Props, States> {
             bottomCameraBarHeight: 0,
             cameraHeight: 0,
             cameraWidth: 0,
+
+            capturedPhotoUri: '',
 
             cameraRatio: '4:3',
             isCameraRatioReady: false,
@@ -131,16 +134,23 @@ class CameraScreen extends Component<Props, States> {
     private transitionToPredictionScreen = (imageUri: string): void => {
         console.log(Time() + '[INFO] Trying to navigate from Camera screen to Prediction screen')
 
-        this.setState({ isScreenFocused: false })
-        this.props.navigation.push(
-            'PredictionScreen', {
-                imageUri: imageUri,
-                cameraHeight: this.state.cameraHeight,
-                cameraWidth: this.state.cameraWidth,
-                topCameraBarHeight: this.state.topCameraBarHeight,
-                bottomCameraBarHeight: this.state.bottomCameraBarHeight,
-            }
-        );
+        this.setState({
+            capturedPhotoUri: imageUri
+        }, () => {
+            this.setState({
+                isScreenFocused: false
+            }, () => {
+                this.props.navigation.push(
+                    'PredictionScreen', {
+                        imageUri: imageUri,
+                        cameraHeight: this.state.cameraHeight,
+                        cameraWidth: this.state.cameraWidth,
+                        topCameraBarHeight: this.state.topCameraBarHeight,
+                        bottomCameraBarHeight: this.state.bottomCameraBarHeight,
+                    }
+                );
+            })
+        });
     }
 
     render() {
@@ -185,6 +195,17 @@ class CameraScreen extends Component<Props, States> {
                 <View style={styles.screenContainer}>
                     <StatusBar hidden />
                     <View style={[styles.cameraTopBar, { height: this.state.topCameraBarHeight }]} />
+
+                        <Image
+                            style={{
+                                height: this.state.cameraHeight,
+                                width: this.state.cameraWidth,
+                            }}
+                            source={{
+                                uri: this.state.capturedPhotoUri
+                            }}
+                        />
+
                     <View style={[styles.cameraBottomBar, { height: this.state.bottomCameraBarHeight }]} />
                 </View>
             );
