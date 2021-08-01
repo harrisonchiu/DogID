@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import LoadingScreen from '@screens/LoadingScreen';
 import CameraScreen from '@screens/CameraScreen';
@@ -9,8 +8,14 @@ import PredictionScreen from '@screens/PredictionScreen';
 import BreedDetailsScreen from '@screens/BreedDetailsScreen';
 
 
-const Stack = createStackNavigator();
+type Routes = {
+    LoadingScreen: undefined,
+    CameraScreen: undefined,
+    PredictionScreen: undefined,
+    BreedDetailsScreen: undefined,
+}
 
+const Stack = createStackNavigator();
 
 // TODO: different transitions for different pages
 const AppNavigator = () => {
@@ -27,7 +32,7 @@ const AppNavigator = () => {
             <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
             <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ animationEnabled: false }} />
             <Stack.Screen name="PredictionScreen" component={PredictionScreen} options={{ animationEnabled: false }} />
-            <Stack.Screen name="BreedDetailsScreen" component={BreedDetailsScreen} options={{ ...TransitionPresets.ModalSlideFromBottomIOS }} />
+            <Stack.Screen name="BreedDetailsScreen" component={BreedDetailsScreen} options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}  />
         </Stack.Navigator>
     )
 }
@@ -36,6 +41,9 @@ export default AppNavigator;
 
 
 /**
+ * ...TransitionPresets.ModalSlideFromBottomIOS }}
+ * 
+ * 
  * import * as React from 'react';
 import { View, Button, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';

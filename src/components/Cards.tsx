@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
+    Dimensions,
 } from 'react-native';
 import {
     Card,
@@ -11,13 +12,11 @@ import { BreedPictures } from '@components/BreedPictures'
 
 
 interface Props {
-    onPressAction?: any,
-    cardPaddingLeft: number,
-    cardPaddingRight: number,
+    navigation: any,
+    cardPadding: number,
     cardWidth: number,
     breedName: string,
     probability: number,
-    navigation?: any,
 }
 
 
@@ -26,15 +25,18 @@ class Cards extends Component<Props> {
     private breedPicture: any = BreedPictures[this.props.breedName]
 
     private transitionToBreedDetailsScreen = (): void => {
-        this.props.navigation.push('BreedDetailsScreen')
+        this.props.navigation.push(
+            'BreedDetailsScreen',
+            this.props.breedName,
+        )
     }
 
     render() {
         return (
             <View
                 style={{
-                    paddingLeft: this.props.cardPaddingLeft,
-                    paddingRight: this.props.cardPaddingRight,
+                    paddingLeft: this.props.cardPadding,
+                    paddingRight: this.props.cardPadding,
                 }}
             >
                 <Card 
@@ -49,17 +51,17 @@ class Cards extends Component<Props> {
                 >
                     <Card.Cover
                         style={{
-                            height: "80%",
-                            width: "100%",
+                            flex: 10,
                         }}
                         source={this.breedPicture}
                     />
                     <Card.Title
                         style={{
+                            flex: 0.02,
                             backgroundColor: "lightgreen",
                         }}
                         titleStyle={{
-                            fontSize: 21,  // default is 20
+                            fontSize: 21,
                             fontWeight: "bold",
                         }}
                         subtitleStyle={{
@@ -68,9 +70,6 @@ class Cards extends Component<Props> {
                         title={this.props.breedName}
                         subtitle={this.probabilityText}
                     />
-                    <Card.Content style={{ backgroundColor: "lightgreen" }}>
-                        <View />
-                    </Card.Content>
                 </Card>
             </View>
         );

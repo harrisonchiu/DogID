@@ -1,12 +1,9 @@
-import React, { Component, useRef } from 'react';
+import React, { Component } from 'react';
 import { 
     View,
     Dimensions,
     Animated,
-    TouchableOpacity,
     ScrollView,
-    Text,
-    FlatList,
     StatusBar,
 } from 'react-native';
 
@@ -188,12 +185,18 @@ class PredictionScreen extends Component<Props, States> {
                             decelerationRate={0.96}
                         >
                             <Cards
-                                cardPaddingLeft={this.state.screenWidth * 0.03}
-                                cardPaddingRight={this.state.screenWidth * 0.03}
+                                navigation={this.props.navigation}
+                                cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][0]}
                                 probability={this.state.predictions[1][0]}
+                            />
+                            <Cards
                                 navigation={this.props.navigation}
+                                cardPadding={this.state.screenWidth * 0.03}
+                                cardWidth={this.state.screenWidth * 0.84}
+                                breedName={this.state.predictions[0][1]}
+                                probability={this.state.predictions[1][1]}
                             />
                             {/* <Cards
                                 cardPaddingLeft={this.state.screenWidth * 0.03}
