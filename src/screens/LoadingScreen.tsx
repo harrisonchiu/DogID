@@ -8,7 +8,7 @@ import {
 import { Camera } from 'expo-camera';
 import LottieView from "lottie-react-native";
 
-import { Time } from '@actions/Log';
+import { Logger } from '@actions/Log';
 import { styles } from '@config/Styles';
 import { loadTensorflow, loadModel } from '@actions/LoadAssets';
 
@@ -35,16 +35,16 @@ class LoadingScreen extends Component<Props, States> {
             isCameraPermitted: false,
         };
 
-        console.log(Time() + '[INFO] Navigated to Loading screen')
+        Logger.trace('Navigated to Loading screen');
     }
 
     async componentDidMount() {
         const { status } = await Camera.requestPermissionsAsync();
-        console.log(Time() + '[INFO] Requesting camera permissions')
+        Logger.info('Requesting camera permissions');
 
         if (status === 'granted') {
             this.setState({ isCameraPermitted: true });
-            console.log(Time() + '[INFO] Camera permissions granted')
+            Logger.info('Camera permissions granted');
 
             await loadTensorflow();
             await loadModel();
@@ -56,8 +56,8 @@ class LoadingScreen extends Component<Props, States> {
     }
 
     private transitionToCameraScreen = (): void => {
-        console.log(Time() + '[INFO] Trying to navigate from Loading screen to Camera screen')
-        console.log(Time() + '[DEBUG] Will remove loading screen from navigation stack')
+        Logger.debug('Trying to navigate from Loading screen to Camera screen');
+        Logger.debug('Removing loading screen from navigation stack');
 
         this.props.navigation.reset({
             index: 0,

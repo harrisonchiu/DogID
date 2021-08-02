@@ -1,7 +1,7 @@
 import * as tf from '@tensorflow/tfjs';
 import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
 
-import { Time } from '@actions/Log';
+import { Logger } from '@actions/Log';
 
 const modelJson = require('@assets/Models/efficientnetb1-noisystudent-tfjs/model.json');
 const modelWeights: any[] = [
@@ -149,9 +149,9 @@ const breedNames: string[] = [
 
 
 const loadTensorflow = async(): Promise<void> => {
-    console.log(Time() + '[INFO] Started loading tensorflow')
-    await tf.ready()
-    console.log(Time() + '[INFO] Finished loading tensorflow')
+    Logger.info('Started loading tensorflow');
+    await tf.ready();
+    Logger.info('Finished loading tensorflow');
 }
 
 
@@ -163,13 +163,13 @@ const loadModel = async(): Promise<void> => {
         bundleResourceIO(modelJson, modelWeights)
     );
 
-    console.log(Time() + '[INFO] Started loading the model')
+    Logger.info('Started loading the model');
     try {
         loadedModel.predict(tf.zeros([1, 240, 240, 3]));
     } catch (error) {
-        console.log(Time() + '[ERROR] Failed to do first prediction' + error);
+        Logger.error('Failed to do first prediction loading the model' + error);
     }
-    console.log(Time() + '[INFO] Finished loading the model')
+    Logger.info('Finished loading the model');
 }
 
 export { breedNames, loadTensorflow, loadModel, loadedModel };

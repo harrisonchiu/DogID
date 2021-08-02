@@ -10,10 +10,10 @@ import {
 import * as ImageManipulator from 'expo-image-manipulator'
 import LottieView from 'lottie-react-native';
 
-import { Time } from '@actions/Log';
+import { Logger } from '@actions/Log';
 import { styles } from '@config/Styles';
 import ClassifyImage from '@actions/ClassifyImage';
-import Cards from '@components/Cards';
+import PredictionCards from '@components/PredictionCards';
 
 const loadingAnimation = require('@assets/like.json')
 
@@ -57,7 +57,7 @@ class PredictionScreen extends Component<Props, States> {
 
         this.params = this.props.route.params;
 
-        console.log(Time() + '[INFO] Navigated to Prediction screen')
+        Logger.trace('Navigated to Prediction screen');
     }
 
     private params: any;
@@ -81,7 +81,7 @@ class PredictionScreen extends Component<Props, States> {
             duration: this.state.initialAnimationDuration,
             useNativeDriver: true,
         }).start();
-        console.log(Time() + '[DEBUG] Animated image moving up')
+        Logger.trace('Animating image moving up');
     }
 
     private animateBottomBarMovingUp = (): void => {
@@ -90,7 +90,7 @@ class PredictionScreen extends Component<Props, States> {
             duration: this.state.initialAnimationDuration,
             useNativeDriver: true,
         }).start();
-        console.log(Time() + '[DEBUG] Animated bottom bar moving up')
+        Logger.trace('Animating bottom bar moving up');
     }
 
     private animateScrollViewMovingLeft = (): void => {
@@ -99,17 +99,17 @@ class PredictionScreen extends Component<Props, States> {
             duration: this.state.showPredictionsAnimationDuration,
             useNativeDriver: true,
         }).start();
-        console.log(Time() + '[DEBUG] Animated the predictions scroll view moving left')
+        Logger.trace('Animating predictions scroll view moving left');
     }
 
     private predictImage = async(): Promise<void> => {
-        console.log(Time() + '[INFO] Started resizing image to fit model input size')
+        Logger.info('Started resizing image to fit model input size');
         const resizedImage = await ImageManipulator.manipulateAsync(
             this.params.imageUri,
             [{ resize: { width: 240, height: 240 } }],
             { base64: true },
         );
-        console.log(Time() + '[INFO] Finished resizing image to fit model input size')
+        Logger.info('Finished resizing image to fit model input size');
 
         const predictions = ClassifyImage(resizedImage, 5, 2);
 
@@ -119,7 +119,7 @@ class PredictionScreen extends Component<Props, States> {
             this.setState({
                 predictions: predictions,
             }, () => {
-                console.log(Time() + '[DEBUG] Finished setting prediction state')
+                Logger.debug('Finished setting prediction state');
 
                 // Artificial delay to show loading animation
                 setTimeout(() => {
@@ -127,12 +127,12 @@ class PredictionScreen extends Component<Props, States> {
                         this.setState({
                             isLoadingDone: true
                         }, () => {
-                            console.log(Time() + '[DEBUG] Finished setting isLoadingDone state')
+                            Logger.debug('Finished setting isLoadingDone state');
                             this.animateScrollViewMovingLeft();
                         });
                     } else {
-                        console.log(Time() + '[WARN] Navigation was not in focus when setting isLoadingDone state')
-                        console.log(Time() + '[WARN] User likely cancelled prediction before prediction was done')
+                        Logger.warn('Navigation was not in focus when setting isLoadingDone state');
+                        Logger.warn('User likely cancelled prediction before prediction was done');
                     }
                 }, this.state.artificialPredictionDelay);
             });
@@ -184,48 +184,41 @@ class PredictionScreen extends Component<Props, States> {
                             overScrollMode="never"
                             decelerationRate={0.96}
                         >
-                            <Cards
+                            <PredictionCards
                                 navigation={this.props.navigation}
                                 cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][0]}
                                 probability={this.state.predictions[1][0]}
                             />
-                            <Cards
+                            <PredictionCards
                                 navigation={this.props.navigation}
                                 cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][1]}
                                 probability={this.state.predictions[1][1]}
                             />
-                            {/* <Cards
-                                cardPaddingLeft={this.state.screenWidth * 0.03}
-                                cardPaddingRight={this.state.screenWidth * 0.03}
-                                cardWidth={this.state.screenWidth * 0.84}
-                                breedName={this.state.predictions[0][1]}
-                                probability={this.state.predictions[1][1]}
-                            />
-                            <Cards
-                                cardPaddingLeft={this.state.screenWidth * 0.03}
-                                cardPaddingRight={this.state.screenWidth * 0.03}
+                            <PredictionCards
+                                navigation={this.props.navigation}
+                                cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][2]}
                                 probability={this.state.predictions[1][2]}
                             />
-                            <Cards
-                                cardPaddingLeft={this.state.screenWidth * 0.03}
-                                cardPaddingRight={this.state.screenWidth * 0.03}
+                            <PredictionCards
+                                navigation={this.props.navigation}
+                                cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][3]}
                                 probability={this.state.predictions[1][3]}
                             />
-                            <Cards
-                                cardPaddingLeft={this.state.screenWidth * 0.03}
-                                cardPaddingRight={this.state.screenWidth * 0.03}
+                            <PredictionCards
+                                navigation={this.props.navigation}
+                                cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
                                 breedName={this.state.predictions[0][4]}
                                 probability={this.state.predictions[1][4]}
-                            /> */}
+                            />
                         </Animated.ScrollView>
                     ) : (
                         <LottieView source={loadingAnimation} autoPlay loop />

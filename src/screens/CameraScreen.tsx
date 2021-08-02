@@ -11,7 +11,7 @@ import {
 
 import { Camera } from 'expo-camera';
 
-import { Time } from '@actions/Log';
+import { Logger } from '@actions/Log';
 import { styles } from '@config/Styles';
 
 
@@ -53,7 +53,7 @@ class CameraScreen extends Component<Props, States> {
             isScreenFocused: true,
         };
 
-        console.log(Time() + '[INFO] Navigated to Camera screen')
+        Logger.trace('Navigated to Camera screen');
     }
 
     private camera: Camera | null = null;
@@ -67,7 +67,7 @@ class CameraScreen extends Component<Props, States> {
         // Adds a listener to check if camera screen is focused
         // Used to unmount camera
         this.props.navigation.addListener('focus', () => {
-            console.log(Time() + '[INFO] Camera screen is now on focus')
+            Logger.trace('Camera screen is now on focus');
             this.setState({ isScreenFocused: true })
         });
 
@@ -95,7 +95,7 @@ class CameraScreen extends Component<Props, States> {
 
             isScreenFocused: true,
         }, () => {
-            console.log(Time() + '[INFO] Finished setting camera ratio to ' + this.state.cameraRatio)
+            Logger.trace('Finished setting camera ratio to ' + this.state.cameraRatio);
         });
     }
 
@@ -123,16 +123,16 @@ class CameraScreen extends Component<Props, States> {
                 skipProcessing: true
             });
 
-            console.log(Time() + '[INFO] Camera took a picture')
+            Logger.info('Camera took a picture');
 
-            this.transitionToPredictionScreen(image.uri)
+            this.transitionToPredictionScreen(image.uri);
         } else {
-            console.log(Time() + '[WARN] Camera is not set but tried to take a picture')
+            Logger.error('Camera is not set but tried to take a picture');
         }
     }
 
     private transitionToPredictionScreen = (imageUri: string): void => {
-        console.log(Time() + '[INFO] Trying to navigate from Camera screen to Prediction screen')
+        Logger.trace('Trying to navigate from Camera screen to Prediction screen');
 
         this.setState({
             capturedPhotoUri: imageUri
@@ -155,7 +155,7 @@ class CameraScreen extends Component<Props, States> {
 
     render() {
         if (this.state.isScreenFocused === true) {
-            console.log(Time() + '[INFO] Camera has been mounted')
+            Logger.debug('Camera has been mounted');
             return (
                 <View style={styles.screenContainer}>
                     <StatusBar hidden />
@@ -190,7 +190,7 @@ class CameraScreen extends Component<Props, States> {
                 </View>
             );
         } else {
-            console.log(Time() + '[INFO] Camera has been unmounted')
+            Logger.debug('Camera has been unmounted');
             return (
                 <View style={styles.screenContainer}>
                     <StatusBar hidden />

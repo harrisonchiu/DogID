@@ -20,14 +20,15 @@ interface Props {
 }
 
 
-class Cards extends Component<Props> {
+class PredictionCards extends Component<Props> {
     private probabilityText: string = 'Probability: ' + this.props.probability + '%'
     private breedPicture: any = BreedPictures[this.props.breedName]
 
     private transitionToBreedDetailsScreen = (): void => {
         this.props.navigation.push(
-            'BreedDetailsScreen',
-            this.props.breedName,
+            'BreedDetailsScreen', {
+                image: this.breedPicture,
+            }
         )
     }
 
@@ -76,4 +77,4 @@ class Cards extends Component<Props> {
     }
 }
 
-export default Cards;
+export default PredictionCards;
