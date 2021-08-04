@@ -4,14 +4,21 @@ import {
     Image,
     Dimensions,
 } from 'react-native';
+import {
+    Card,
+    Title,
+    Paragraph,
+} from 'react-native-paper';
 
 import { Logger } from '@actions/Log';
+import InformationCards from '@components/InformationCards';
 
 
 interface Props {
     navigation: any,
     route: any,
 }
+
 
 interface States {
     screenHeight: number,
@@ -44,7 +51,8 @@ class BreedDetailsScreen extends Component<Props, States> {
                     }}
                     source={this.params.image}
                 />
-                <View style={{ flex: 3 }} />
+                <View style={{ flex: 3 }}>
+                </View>
             </View>
         );
     }
