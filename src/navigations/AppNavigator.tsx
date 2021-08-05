@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
@@ -6,6 +7,11 @@ import LoadingScreen from '@screens/LoadingScreen';
 import CameraScreen from '@screens/CameraScreen';
 import PredictionScreen from '@screens/PredictionScreen';
 import BreedDetailsScreen from '@screens/BreedDetailsScreen';
+
+
+LogBox.ignoreLogs([
+ 'Non-serializable values were found in the navigation state',
+]);
 
 
 const Stack = createStackNavigator();

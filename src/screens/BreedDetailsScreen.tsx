@@ -11,7 +11,8 @@ import {
 } from 'react-native-paper';
 
 import { Logger } from '@actions/Log';
-import InformationCards from '@components/InformationCards';
+// import InformationCards from '@components/InformationCards';
+import Breed from '@components/Breed';
 
 
 interface Props {
@@ -35,11 +36,13 @@ class BreedDetailsScreen extends Component<Props, States> {
         }
 
         this.params = this.props.route.params;
+        this.breed = this.props.route.params.breed;
 
         Logger.trace('Navigated to BreedDetails screen');
     }
 
     private params: any;
+    private breed: Breed;
 
     render() {
         return (
@@ -49,9 +52,24 @@ class BreedDetailsScreen extends Component<Props, States> {
                         flex: 2,
                         width: this.state.screenWidth,
                     }}
-                    source={this.params.image}
+                    source={this.breed.getPicture()}
                 />
                 <View style={{ flex: 3 }}>
+                    <Card>
+                        <Card.Content>
+                            <Title
+                                style={{
+                                    fontWeight: "bold",
+                                    fontSize: 22,
+                                }}
+                            >
+                                {this.breed.getName()}
+                            </Title>
+                            <Paragraph>
+                                Paragraph
+                            </Paragraph>
+                        </Card.Content>
+                    </Card>
                 </View>
             </View>
         );

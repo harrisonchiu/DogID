@@ -5,9 +5,10 @@ import * as jpeg from 'jpeg-js';
 
 import { Logger } from '@actions/Log';
 import { breedNames, loadedModel } from '@actions/LoadAssets';
+import Breed from '@components/Breed';
 
 
-function ClassifyImage(image: any, numberOfTopPredictions: number, roundDecimalPlaces: (boolean | number)): [string[], number[]] {
+function ClassifyImage(image: any, numberOfPredictions: number): Breed[] {
     const capturedImageToTensor = (rawImageData: string): tf.Tensor4D => {
         // Turns image into tensor for model to use
         // Assumes image is already resized
@@ -22,49 +23,38 @@ function ClassifyImage(image: any, numberOfTopPredictions: number, roundDecimalP
     }
 
     const formatProbabilities = (probabilities: number[]): number[] => {
-        // Converts 0.xxxxxxx probability to xx.x{roundProbability}% format
-        if (typeof roundDecimalPlaces === 'number' || roundDecimalPlaces === true) {
-            if (roundDecimalPlaces === true) {
-                // if 'true', default to 2 decimal places
-                roundDecimalPlaces = 2;
-            }
+        // Converts 0.xxxxxxx probability to xx.xx% format
+        const roundDecimalPlaces = 2;
 
-            for (let i = 0; i < probabilities.length; i += 1) {
-                probabilities[i] = Math.round(
-                    probabilities[i] * 100 * (10 ** roundDecimalPlaces)
-                ) / (10 ** roundDecimalPlaces);
-            }
-
-            return probabilities;
-        } else {
-            // if 'false'
-            return probabilities;
+        for (let i = 0; i < probabilities.length; i += 1) {
+            probabilities[i] = Math.round(
+                probabilities[i] * 100 * (10 ** roundDecimalPlaces)
+            ) / (10 ** roundDecimalPlaces);
         }
+
+        return probabilities;
     }
 
-    const getPredictedBreedName = (predictions: tf.Tensor): [string[], number[]] => {
+    const getPredictedBreedName = (predictions: tf.Tensor): Breed[] => {
         // Parse information from the output tensor
-        const { values, indices } = tf.topk(predictions, numberOfTopPredictions, true);
+        const { values, indices } = tf.topk(predictions, numberOfPredictions, true);
         let probabilities = (values.arraySync() as number[][])[0];
-        const breedNameIndices = (indices.arraySync() as number[][])[0];
+        const predictedBreedNameIndices = (indices.arraySync() as number[][])[0];
 
         probabilities = formatProbabilities(probabilities);
 
-        // Output prediction is a sorted nested array with the first being the top prediction
-        // [[top1BreedName, ..., top5BreedName], [top1Probability, ..., top5Probability]]
-        const breeds: [string[], number[]] = [
-            new Array<string>(numberOfTopPredictions),
-            probabilities
-        ]
+        const predictedBreeds: Breed[] = Array<Breed>(numberOfPredictions);
 
-        for (let i = 0; i < numberOfTopPredictions; i += 1) {
-            breeds[0][i] = breedNames[breedNameIndices[i]];
+        // Get all the information of the breed and put the probability metadata in it
+        for (let i = 0; i < numberOfPredictions; i += 1) {
+            predictedBreeds[i] = new Breed(breedNames[predictedBreedNameIndices[i]]);
+            predictedBreeds[i].setProbability(probabilities[i]);
         }
 
-        return breeds;
+        return predictedBreeds;
     }
 
-    const predictCapturedImage = (): [string[], number[]] => {
+    const predictCapturedImage = (): Breed[] => {
         try {
             Logger.info('Started converting image to tensor');
             const imageTensor = capturedImageToTensor(image.base64);
@@ -78,7 +68,7 @@ function ClassifyImage(image: any, numberOfTopPredictions: number, roundDecimalP
             return getPredictedBreedName(predictions);
         } catch (error) {
             Logger.error('Failed to predict image ' + error);
-            return [[], []];
+            return [];
         }
     }
 

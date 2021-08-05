@@ -8,28 +8,27 @@ import {
 } from 'react-native-paper';
 
 import { Colours } from '@config/Colours';
-import { BreedPictures } from '@components/BreedPictures'
+import Breed from '@components/Breed';
 
 
 interface Props {
     navigation: any,
     cardPadding: number,
     cardWidth: number,
-    breedName: string,
-    probability: number,
+    breed: Breed,
 }
 
 
 class PredictionCards extends Component<Props> {
-    private probabilityText: string = 'Probability: ' + this.props.probability + '%'
-    private breedPicture: any = BreedPictures[this.props.breedName]
+    private breed: Breed = this.props.breed;
+    private probabilityText: string = `Probability: ${this.breed.getProbability()}%`;
 
     private transitionToBreedDetailsScreen = (): void => {
-        this.props.navigation.push(
+        this.props.navigation.navigate(
             'BreedDetailsScreen', {
-                image: this.breedPicture,
+                breed: this.breed,
             }
-        )
+        );
     }
 
     render() {
@@ -54,7 +53,7 @@ class PredictionCards extends Component<Props> {
                         style={{
                             flex: 10,
                         }}
-                        source={this.breedPicture}
+                        source={this.breed.getPicture()}
                     />
                     <Card.Title
                         style={{
@@ -68,7 +67,8 @@ class PredictionCards extends Component<Props> {
                         subtitleStyle={{
                             fontSize: 16,
                         }}
-                        title={this.props.breedName}
+                        // title={'s'}
+                        title={this.breed.getName()}
                         subtitle={this.probabilityText}
                     />
                 </Card>

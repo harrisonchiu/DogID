@@ -14,6 +14,7 @@ import { Logger } from '@actions/Log';
 import { styles } from '@config/Styles';
 import ClassifyImage from '@actions/ClassifyImage';
 import PredictionCards from '@components/PredictionCards';
+import Breed from '@components/Breed';
 
 const loadingAnimation = require('@assets/like.json')
 
@@ -33,7 +34,7 @@ interface States {
     initialAnimationDuration: number,
     bottomBarFinalHeight: number,
     isLoadingDone: boolean,
-    predictions: [string[], number[]],
+    predictions: Breed[],
 }
 
 
@@ -52,7 +53,7 @@ class PredictionScreen extends Component<Props, States> {
             bottomBarFinalHeight: 6 * Dimensions.get('window').height / 10,
 
             isLoadingDone: false,
-            predictions: [[], []],
+            predictions: [],
         };
 
         this.params = this.props.route.params;
@@ -111,7 +112,7 @@ class PredictionScreen extends Component<Props, States> {
         );
         Logger.info('Finished resizing image to fit model input size');
 
-        const predictions = ClassifyImage(resizedImage, 5, 2);
+        const predictions = ClassifyImage(resizedImage, 5);
 
         // Set predictions and change the animation 3 seconds later
         // Only do these if the screen is still mounted
@@ -135,6 +136,7 @@ class PredictionScreen extends Component<Props, States> {
                         Logger.warn('User likely cancelled prediction before prediction was done');
                     }
                 }, this.state.artificialPredictionDelay);
+
             });
         }
     }
@@ -188,36 +190,31 @@ class PredictionScreen extends Component<Props, States> {
                                 navigation={this.props.navigation}
                                 cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
-                                breedName={this.state.predictions[0][0]}
-                                probability={this.state.predictions[1][0]}
+                                breed={this.state.predictions[0]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
                                 cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
-                                breedName={this.state.predictions[0][1]}
-                                probability={this.state.predictions[1][1]}
+                                breed={this.state.predictions[1]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
                                 cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
-                                breedName={this.state.predictions[0][2]}
-                                probability={this.state.predictions[1][2]}
+                                breed={this.state.predictions[2]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
                                 cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
-                                breedName={this.state.predictions[0][3]}
-                                probability={this.state.predictions[1][3]}
+                                breed={this.state.predictions[3]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
                                 cardPadding={this.state.screenWidth * 0.03}
                                 cardWidth={this.state.screenWidth * 0.84}
-                                breedName={this.state.predictions[0][4]}
-                                probability={this.state.predictions[1][4]}
+                                breed={this.state.predictions[4]}
                             />
                         </Animated.ScrollView>
                     ) : (
