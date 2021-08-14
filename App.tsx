@@ -7,8 +7,8 @@ import AppNavigator from '@src/navigations/AppNavigator';
 const App = () => {
     return (
         <PaperProvider>
-            <NavigationContainer theme={ DarkTheme }>
-                <AppNavigator></AppNavigator>
+            <NavigationContainer theme={DarkTheme}>
+                <AppNavigator />
             </NavigationContainer>
         </PaperProvider>
     );

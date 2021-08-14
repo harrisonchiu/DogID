@@ -86,12 +86,24 @@ class Breed {
         return this.lifespan;
     }
 
+    getLifespanString = (): string => {
+        return `${this.lifespan[0]} - ${this.lifespan[1]}`
+    }
+
     getHeight = (): [number, number] => {
         return this.height;
     }
 
+    getHeightString = (): string => {
+        return `${this.height[0]} - ${this.height[1]}`
+    }
+
     getWeight = (): [number, number] => {
         return this.weight;
+    }
+
+    getWeightString = (): string => {
+        return `${this.weight[0]} - ${this.weight[1]}`
     }
 
     getFriendliness = (): number => {

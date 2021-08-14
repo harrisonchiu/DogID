@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { 
     View,
-    Dimensions,
     Animated,
     ScrollView,
     StatusBar,
@@ -11,10 +10,11 @@ import * as ImageManipulator from 'expo-image-manipulator'
 import LottieView from 'lottie-react-native';
 
 import { Logger } from '@actions/Log';
-import { styles } from '@config/Styles';
+import { Colours } from '@config/Colours';
+import { Normalizer, screenHeight, screenWidth } from '@actions/Normalize';
+import Breed from '@components/Breed';
 import ClassifyImage from '@actions/ClassifyImage';
 import PredictionCards from '@components/PredictionCards';
-import Breed from '@components/Breed';
 
 const loadingAnimation = require('@assets/like.json')
 
@@ -26,12 +26,10 @@ interface Props {
 
 
 interface States {
-    screenHeight: number,
-    screenWidth: number,
-    artificialPredictionDelay: number,
-    showPredictionsAnimationDuration: number,
     initialAnimationDelay: number,
     initialAnimationDuration: number,
+    artificialPredictionDelay: number,
+    showPredictionsAnimationDuration: number,
     bottomBarFinalHeight: number,
     isLoadingDone: boolean,
     predictions: Breed[],
@@ -42,15 +40,13 @@ class PredictionScreen extends Component<Props, States> {
     constructor(props: any) {
         super(props);
         this.state = {
-            screenHeight: Dimensions.get('window').height,
-            screenWidth: Dimensions.get('window').width,
+            initialAnimationDelay: 900,
+            initialAnimationDuration: 300,
 
             artificialPredictionDelay: 3000,
             showPredictionsAnimationDuration: 300,
 
-            initialAnimationDelay: 900,
-            initialAnimationDuration: 300,
-            bottomBarFinalHeight: 6 * Dimensions.get('window').height / 10,
+            bottomBarFinalHeight: 6 * screenHeight / 10,
 
             isLoadingDone: false,
             predictions: [],
@@ -65,7 +61,7 @@ class PredictionScreen extends Component<Props, States> {
 
     private imageAnimation: Animated.Value = new Animated.Value(0);
     private bottomBarAnimation: Animated.Value = new Animated.Value(0);
-    private scrollViewAnimation: Animated.Value = new Animated.Value(Dimensions.get('window').width);
+    private scrollViewAnimation: Animated.Value = new Animated.Value(screenWidth);
 
     componentDidMount() {
         setTimeout(() => {
@@ -104,6 +100,7 @@ class PredictionScreen extends Component<Props, States> {
     }
 
     private predictImage = async(): Promise<void> => {
+        // Resize image to fix model input layer
         Logger.info('Started resizing image to fit model input size');
         const resizedImage = await ImageManipulator.manipulateAsync(
             this.params.imageUri,
@@ -136,16 +133,27 @@ class PredictionScreen extends Component<Props, States> {
                         Logger.warn('User likely cancelled prediction before prediction was done');
                     }
                 }, this.state.artificialPredictionDelay);
-
             });
         }
     }
 
     render() {
         return (
-            <View style={styles.screenContainer}>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'space-between',
+                    backgroundColor: Colours.gray[900],
+                }}
+            >
                 <StatusBar hidden />
-                <View style={[styles.predictionTopBar, { height: this.params.topCameraBarHeight }]} />
+                <View
+                    style={{
+                        alignItems: 'center',
+                        backgroundColor: Colours.gray[900],
+                        height: this.params.topCameraBarHeight,
+                    }}
+                />
                 <Animated.Image
                     style={{
                         height: this.params.cameraHeight,
@@ -155,21 +163,21 @@ class PredictionScreen extends Component<Props, States> {
                     source={{ uri: this.params.imageUri }}
                 />
                 <Animated.View
-                    style={[
-                        styles.predictionContainer, {
-                            height: this.state.bottomBarFinalHeight,
-                            transform: [{ translateY: this.bottomBarAnimation }],
-                        }
-                    ]}
+                    style={{
+                        alignItems: 'center',
+                        backgroundColor: Colours.gray[200],
+                        height: this.state.bottomBarFinalHeight,
+                        transform: [{ translateY: this.bottomBarAnimation }],
+                    }}
                 >
                     {this.state.isLoadingDone === true ? (
                         <Animated.ScrollView
-                            style={[
-                                styles.predictionScrollView, {
-                                    width: "100%",
-                                    transform: [{ translateX: this.scrollViewAnimation }],
-                                }
-                            ]}
+                            style={{
+                                flex: 1,
+                                width: '100%',
+                                backgroundColor: Colours.transparent,
+                                transform: [{ translateX: this.scrollViewAnimation }],
+                            }}
 
                             // To center the card in the view:
                             // Assume padding is reference to one side of padding and paddingLeft == paddingRight
@@ -178,8 +186,8 @@ class PredictionScreen extends Component<Props, States> {
                             contentContainerStyle={{
                                 alignItems: "center",
                                 justifyContent: "center",
-                                paddingLeft: this.state.screenWidth * 0.05,
-                                paddingRight: this.state.screenWidth * 0.05,
+                                paddingLeft: screenWidth * 0.05,
+                                paddingRight: screenWidth * 0.05,
                             }}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
@@ -188,32 +196,32 @@ class PredictionScreen extends Component<Props, States> {
                         >
                             <PredictionCards
                                 navigation={this.props.navigation}
-                                cardPadding={this.state.screenWidth * 0.03}
-                                cardWidth={this.state.screenWidth * 0.84}
+                                cardPadding={screenWidth * 0.03}
+                                cardWidth={screenWidth * 0.84}
                                 breed={this.state.predictions[0]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
-                                cardPadding={this.state.screenWidth * 0.03}
-                                cardWidth={this.state.screenWidth * 0.84}
+                                cardPadding={screenWidth * 0.03}
+                                cardWidth={screenWidth * 0.84}
                                 breed={this.state.predictions[1]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
-                                cardPadding={this.state.screenWidth * 0.03}
-                                cardWidth={this.state.screenWidth * 0.84}
+                                cardPadding={screenWidth * 0.03}
+                                cardWidth={screenWidth * 0.84}
                                 breed={this.state.predictions[2]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
-                                cardPadding={this.state.screenWidth * 0.03}
-                                cardWidth={this.state.screenWidth * 0.84}
+                                cardPadding={screenWidth * 0.03}
+                                cardWidth={screenWidth * 0.84}
                                 breed={this.state.predictions[3]}
                             />
                             <PredictionCards
                                 navigation={this.props.navigation}
-                                cardPadding={this.state.screenWidth * 0.03}
-                                cardWidth={this.state.screenWidth * 0.84}
+                                cardPadding={screenWidth * 0.03}
+                                cardWidth={screenWidth * 0.84}
                                 breed={this.state.predictions[4]}
                             />
                         </Animated.ScrollView>

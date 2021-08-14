@@ -7,6 +7,7 @@ const styles = {
     blink: "5",
     reverse: "7",
     hidden: "8",
+
     // Foreground (text) colors
     fg: {
         black: "30",
@@ -19,6 +20,7 @@ const styles = {
         white: "37",
         crimson: "38"
     },
+
     // Background colors
     bg: {
         black: "40",
@@ -35,46 +37,45 @@ const styles = {
 
 const Time = (): string => {
     const date = new Date()
-    const currentTime = date.toLocaleTimeString('en-GB')
-    const currentMilliseconds = ('000' + date.getMilliseconds()).slice(-3);
 
-    return '[' + currentTime + ':' + currentMilliseconds + ']'
+    // Current time HH:mm:ss (24 hours) with milliseconds (constantly 3 digits)
+    return `[${date.toLocaleTimeString('en-GB')}:${('000' + date.getMilliseconds()).slice(-3)}]`
 }
 
 class Logger {
     static trace(logText: string) {
         const style = `${styles.start}${styles.bg.black};${styles.fg.white}m`
-        console.log(`${style}${Time()}${styles.reset}` + ' ' + `${style}[TRACE]${styles.reset} ${logText}`)
+        console.log(`${style}${Time()}${styles.reset} ${style}[TRACE]${styles.reset} ${logText}`)
     }
 
     static debug(logText: string) {
         const style = `${styles.start}${styles.bg.black};${styles.fg.white}m`
-        console.log(`${style}${Time()}${styles.reset}` + ' ' + `${style}[DEBUG]${styles.reset} ${logText}`)
+        console.log(`${style}${Time()}${styles.reset} ${style}[DEBUG]${styles.reset} ${logText}`)
     }
 
     static info(logText: string) {
         const style = `${styles.start}${styles.bg.white};${styles.fg.black}m`
-        console.log(`${style}${Time()}${styles.reset}` + ' ' + `${style}[INFO]${styles.reset} ${logText}`)
+        console.log(`${style}${Time()}${styles.reset} ${style}[INFO]${styles.reset} ${logText}`)
     }
 
     static warn(logText: string) {
         const style = `${styles.start}${styles.bg.yellow};${styles.fg.black}m`
-        console.log(`${style}${Time()}${styles.reset}` + ' ' + `${style}[WARN]${styles.reset} ${logText}`)
+        console.log(`${style}${Time()}${styles.reset} ${style}[WARN]${styles.reset} ${logText}`)
     }
 
     static error(logText: string) {
         const style = `${styles.start}${styles.bg.red};${styles.fg.black}m`
-        console.log(`${style}${Time()}${styles.reset}` + ' ' + `${style}[ERROR]${styles.reset} ${logText}`)
+        console.log(`${style}${Time()}${styles.reset} ${style}[ERROR]${styles.reset} ${logText}`)
     }
 
     static fatal(logText: string) {
         const style = `${styles.start}${styles.bold};${styles.bg.red};${styles.fg.black}m`
-        console.log(`${style}${Time()}${styles.reset}` + ' ' + `${style}[FATAL]${styles.reset} ${logText}`)
+        console.log(`${style}${Time()}${styles.reset} ${style}[FATAL]${styles.reset} ${logText}`)
     }
     
     static success(logText: string) {
         const style = `${styles.start}${styles.bg.green};${styles.fg.black}m`
-        console.log(`${style}${Time()}${styles.reset}` + ' ' + `${style}[SUCCESS]${styles.reset} ${logText}`)
+        console.log(`${style}${Time()}${styles.reset} ${style}[SUCCESS]${styles.reset} ${logText}`)
     }
 }
 

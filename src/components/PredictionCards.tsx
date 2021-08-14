@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {
     View,
-    Dimensions,
 } from 'react-native';
 import {
     Card,
 } from 'react-native-paper';
 
 import { Colours } from '@config/Colours';
+import { Normalizer } from '@actions/Normalize';
 import Breed from '@components/Breed';
 
 
@@ -58,16 +58,15 @@ class PredictionCards extends Component<Props> {
                     <Card.Title
                         style={{
                             flex: 0.02,
-                            backgroundColor: "lightgreen",
+                            backgroundColor: Colours.green[600],
                         }}
                         titleStyle={{
-                            fontSize: 21,
+                            fontSize: Normalizer.fontPixel(72),
                             fontWeight: "bold",
                         }}
                         subtitleStyle={{
-                            fontSize: 16,
+                            fontSize: Normalizer.fontPixel(48),
                         }}
-                        // title={'s'}
                         title={this.breed.getName()}
                         subtitle={this.probabilityText}
                     />

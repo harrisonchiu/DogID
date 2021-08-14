@@ -27,10 +27,25 @@ const AppNavigator = () => {
             }}
             mode="modal"
         >
-            <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
-            <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ animationEnabled: false }} />
-            <Stack.Screen name="PredictionScreen" component={PredictionScreen} options={{ animationEnabled: false }} />
-            <Stack.Screen name="BreedDetailsScreen" component={BreedDetailsScreen} options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}  />
+            <Stack.Screen
+                name="LoadingScreen"
+                component={LoadingScreen}
+            />
+            <Stack.Screen
+                name="CameraScreen"
+                component={CameraScreen}
+                options={{ animationEnabled: false }}
+            />
+            <Stack.Screen 
+                name="PredictionScreen"
+                component={PredictionScreen}
+                options={{ animationEnabled: false }}
+            />
+            <Stack.Screen
+                name="BreedDetailsScreen"
+                component={BreedDetailsScreen}
+                options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
+            />
         </Stack.Navigator>
     )
 }

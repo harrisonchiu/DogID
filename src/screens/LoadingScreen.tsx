@@ -9,7 +9,7 @@ import { Camera } from 'expo-camera';
 import LottieView from "lottie-react-native";
 
 import { Logger } from '@actions/Log';
-import { styles } from '@config/Styles';
+import { Colours } from '@config/Colours';
 import { loadTensorflow, loadModel } from '@actions/LoadAssets';
 
 
@@ -67,13 +67,18 @@ class LoadingScreen extends Component<Props, States> {
 
     render() {
         return (
-
-            <View style={styles.screenContainerWithText}>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'space-between',
+                    backgroundColor: Colours.green[400],
+                }}
+            >
                 <StatusBar hidden />
                 {this.state.isCameraPermitted === true ? (
                     <LottieView source={loadingAnimation} autoPlay loop />
                 ) : (
-                    <Text style={styles.screenContainerText}>Camera NOT PERMITTED</Text>
+                    <Text style={{ fontSize: 32 }}>Camera NOT PERMITTED</Text>
                 )}
             </View>
         );

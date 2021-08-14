@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    Text,
-    Dimensions,
     TouchableOpacity,
     Image,
     Animated,
@@ -12,7 +10,8 @@ import {
 import { Camera } from 'expo-camera';
 
 import { Logger } from '@actions/Log';
-import { styles } from '@config/Styles';
+import { Colours } from '@config/Colours';
+import { Normalizer, screenHeight, screenWidth } from '@actions/Normalize';
 
 
 interface Props {
@@ -21,8 +20,6 @@ interface Props {
 
 
 interface States {
-    screenHeight: number,
-    screenWidth: number,
     topCameraBarHeight: number,
     bottomCameraBarHeight: number,
     cameraHeight: number,
@@ -38,9 +35,6 @@ class CameraScreen extends Component<Props, States> {
     constructor(props: any) {
         super(props);
         this.state = {
-            screenHeight: Dimensions.get('window').height,
-            screenWidth: Dimensions.get('window').width,
-
             topCameraBarHeight: 0,
             bottomCameraBarHeight: 0,
             cameraHeight: 0,
@@ -82,15 +76,25 @@ class CameraScreen extends Component<Props, States> {
         // Ratio is treated as screenHeight:screenWidth
         const ratio = parseInt(this.state.cameraRatio.split(':')[0])
                         / parseInt(this.state.cameraRatio.split(':')[1]);
-        const cameraPreviewHeight = ratio * this.state.screenWidth;
+        const cameraPreviewHeight = ratio * screenWidth;
+
+        // For small phones, the top camera bar height is small and useless
+        // Remove it and give the space to the bottom bar
+        let topCameraBarHeight = (screenHeight - cameraPreviewHeight) / 4;
+        let bottomCameraBarHeight = 3 * (screenHeight - cameraPreviewHeight) / 4;
+
+        if (topCameraBarHeight < screenHeight / 12) {
+            bottomCameraBarHeight += topCameraBarHeight;
+            topCameraBarHeight = 0;
+        }
 
         // Padding on top and bottom
         this.setState({
-            topCameraBarHeight: (this.state.screenHeight - cameraPreviewHeight) / 4,
-            bottomCameraBarHeight: 3 * (this.state.screenHeight - cameraPreviewHeight) / 4,
+            topCameraBarHeight: topCameraBarHeight,
+            bottomCameraBarHeight: bottomCameraBarHeight,
 
             cameraHeight: cameraPreviewHeight,
-            cameraWidth: this.state.screenWidth,
+            cameraWidth: screenWidth,
             isCameraRatioReady: true,
 
             isScreenFocused: true,
@@ -157,28 +161,71 @@ class CameraScreen extends Component<Props, States> {
         if (this.state.isScreenFocused === true) {
             Logger.debug('Camera has been mounted');
             return (
-                <View style={styles.screenContainer}>
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'space-between',
+                        backgroundColor: Colours.gray[900],
+                    }}
+                >
                     <StatusBar hidden />
-                    <View style={[styles.cameraTopBar, { height: this.state.topCameraBarHeight }]} />
+
+                    {/* Top camera bar */}
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            height: this.state.topCameraBarHeight,
+                            backgroundColor: Colours.gray[900],
+                        }}
+                    />
+
+                    {/* Camera */}
                     <Camera
                         style={{ height: this.state.cameraHeight, width: this.state.cameraWidth }}
                         ratio={this.state.cameraRatio}
                         ref={(ref) => { this.camera = ref }}
                     />
-                    <View style={[styles.cameraBottomBar, { height: this.state.bottomCameraBarHeight }]}>
-                        <View style={styles.buttonsTopPaddingBar} />
-                        <View style={styles.buttonsContainer}>
+
+                    {/* Bottom camera bar */}
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            height: this.state.bottomCameraBarHeight,
+                            backgroundColor: Colours.gray[900],
+                        }}
+                    >
+                        {/* Top buttons area */}
+                        <View style={{ flex: 0.3 }} />
+
+                        {/* Bottom buttons area */}
+                        <View
+                            style={{
+                                flex: 0.7,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '100%',
+                                width: '100%',
+                            }}
+                        >
+                            {/* Camera capture button container */}
                             <Animated.View 
-                                style={[
-                                    styles.captureButtonContainer, {
-                                        height: this.state.bottomCameraBarHeight / 2.5,
-                                        width: this.state.bottomCameraBarHeight / 2.5,
-                                        transform: [{ scale: this.captureButtonScale }]
-                                    }
-                                ]}
+                                style={{
+                                    alignItems: 'center',
+                                    minHeight: Normalizer.heightPixel(220),
+                                    minWidth: Normalizer.heightPixel(220),
+                                    height: Normalizer.heightPixel(220),
+                                    width: Normalizer.heightPixel(220),
+                                    transform: [{ scale: this.captureButtonScale }]
+                                }}
                             >
+                                {/* Camera capture button */}
                                 <TouchableOpacity
-                                    style={styles.captureButton}
+                                    style={{
+                                        height: '100%',
+                                        width: '100%',
+                                        borderRadius: 50,
+                                        backgroundColor: Colours.red[500],
+                                    }}
                                     onPress={this.takePicture}
                                     onPressIn={this.animateCaptureButtonPressIn}
                                     onPressOut={this.animateCaptureButtonPressOut}
@@ -192,21 +239,43 @@ class CameraScreen extends Component<Props, States> {
         } else {
             Logger.debug('Camera has been unmounted');
             return (
-                <View style={styles.screenContainer}>
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: 'space-between',
+                        backgroundColor: Colours.gray[900],
+                    }}
+                >
                     <StatusBar hidden />
-                    <View style={[styles.cameraTopBar, { height: this.state.topCameraBarHeight }]} />
 
-                        <Image
-                            style={{
-                                height: this.state.cameraHeight,
-                                width: this.state.cameraWidth,
-                            }}
-                            source={{
-                                uri: this.state.capturedPhotoUri
-                            }}
-                        />
+                    {/* Top camera bar */}
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            height: this.state.topCameraBarHeight,
+                            backgroundColor: Colours.gray[900],
+                        }}
+                    />
 
-                    <View style={[styles.cameraBottomBar, { height: this.state.bottomCameraBarHeight }]} />
+                    {/* Captured image */}
+                    <Image
+                        style={{
+                            height: this.state.cameraHeight,
+                            width: this.state.cameraWidth,
+                        }}
+                        source={{
+                            uri: this.state.capturedPhotoUri
+                        }}
+                    />
+
+                    {/* Bottom camera bar */}
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            height: this.state.bottomCameraBarHeight,
+                            backgroundColor: Colours.gray[900],
+                        }}
+                    />
                 </View>
             );
         }

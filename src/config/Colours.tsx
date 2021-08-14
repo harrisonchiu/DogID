@@ -311,7 +311,5 @@ const Colours = {
     },
 };
 
-const primary = 500;
-
 
 export { Colours }
