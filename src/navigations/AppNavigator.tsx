@@ -7,6 +7,7 @@ import LoadingScreen from '@screens/LoadingScreen';
 import CameraScreen from '@screens/CameraScreen';
 import PredictionScreen from '@screens/PredictionScreen';
 import BreedDetailsScreen from '@screens/BreedDetailsScreen';
+import SettingsScreen from '@screens/SettingsScreen';
 
 
 LogBox.ignoreLogs([
@@ -44,6 +45,11 @@ const AppNavigator = () => {
             <Stack.Screen
                 name="BreedDetailsScreen"
                 component={BreedDetailsScreen}
+                options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
+            />
+            <Stack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
                 options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
             />
         </Stack.Navigator>

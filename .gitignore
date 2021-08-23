@@ -2,6 +2,10 @@
 node_modules/
 .expo/*
 Models/
+package-lock.json
+
+# Ignore breed data for now
+BreedInformation.json
 
 # Built application files
 *.apk

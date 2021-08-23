@@ -66,8 +66,8 @@ class FlashCards extends Component<FlashCardsProps> {
                     </Title>
                     <Paragraph
                         style={{
-                            lineHeight: Normalizer.fontPixel(70),
-                            fontSize: Normalizer.fontPixel(60),
+                            lineHeight: Normalizer.fontPixel(66),
+                            fontSize: Normalizer.fontPixel(56),
                         }}
                         numberOfLines={1}
                     >
@@ -90,7 +90,7 @@ class RatingCards extends Component<RatingProps> {
         return (
             <Card
                 style={{
-                    marginTop: '4%',
+                    marginTop: '3%',
                     width: '90%',
                     backgroundColor: Colours.lightGreen[500],
                 }}

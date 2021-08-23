@@ -49,9 +49,7 @@ class LoadingScreen extends Component<Props, States> {
             await loadTensorflow();
             await loadModel();
 
-            setTimeout(() => {
-                this.transitionToCameraScreen();
-            }, 0);
+            this.transitionToCameraScreen();
         }
     }
 
@@ -70,7 +68,8 @@ class LoadingScreen extends Component<Props, States> {
             <View
                 style={{
                     flex: 1,
-                    justifyContent: 'space-between',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                     backgroundColor: Colours.green[400],
                 }}
             >
@@ -78,7 +77,7 @@ class LoadingScreen extends Component<Props, States> {
                 {this.state.isCameraPermitted === true ? (
                     <LottieView source={loadingAnimation} autoPlay loop />
                 ) : (
-                    <Text style={{ fontSize: 32 }}>Camera NOT PERMITTED</Text>
+                    <Text style={{ fontSize: 32, textAlign: 'center' }}>Camera NOT PERMITTED</Text>
                 )}
             </View>
         );

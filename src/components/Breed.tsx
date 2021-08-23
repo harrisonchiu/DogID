@@ -2,6 +2,7 @@ import { BreedPictures } from '@components/BreedPictures';
 
 const data: BreedInformationType = require('@components/BreedInformation.json')
 
+// Json data structure
 interface BreedInformationType {
     [index: string]: {
         coat: string[];
