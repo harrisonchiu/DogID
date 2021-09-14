@@ -11,9 +11,9 @@
     React Native app that identifies different dog breeds
     <br />
     <br />
-    <a href="https://github.com/harrisonchiu/dogid-model">Neural Network Model</a>
+    <a href="https://github.com/harrisonchiu/dogid-model">DogID Model (Neural Network Model)</a>
     ·
-    <a href="https://github.com/harrisonchiu/dogid-api">Backend API</a>
+    <a href="https://github.com/harrisonchiu/dogid-api">DogID API (Backend API)</a>
   </p>
 </p>
 
