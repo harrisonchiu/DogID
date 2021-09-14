@@ -1,29 +1,107 @@
-# DogID
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/harrisonchiu/dogid-app">
+    <img src="docs/dogid-logo.png" alt="Logo" width="128" height="128">
+  </a>
 
-## Feel free to edit/add to this
+  <h1 align="center">DogID Mobile App</h1>
 
-### Coding Style
-Follow Airbnb's React Style Guide:\
-https://github.com/airbnb/javascript/tree/master/react
+  <p align="center">
+    React Native app that identifies different dog breeds
+    <br />
+    <br />
+    <a href="https://github.com/harrisonchiu/dogid-model">Neural Network Model</a>
+    ·
+    <a href="https://github.com/harrisonchiu/dogid-api">Backend API</a>
+  </p>
+</p>
 
-Follow Google's TypeScript and JavaScript Style Guide:\
-https://google.github.io/styleguide/tsguide.html\
-https://google.github.io/styleguide/jsguide.html
 
-Follow in order of precedence: Airbnb's React/JSX, Google's TypeScript, Google's JavaScript
 
-Use `K&R (One True Brace Style variant)`.
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#about-dogid-api">About DogID App</a>
+      <ul>
+        <li><a href="#dogid-mobile-app-built-with">Mobile App Built With</a></li>
+      </ul>
+      <ul>
+        <li><a href="#restful-api-backend-built-with">API Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#set-up-locally">Set Up Locally</a>
+    </li>
+    <li>
+      <a href="#roadmap">Roadmap</a>
+    </li>
+  </ol>
+</details>
 
-Exceptions to Google's and Airbnb's Style Guide:
-- No abbreviations except for `id`, `params` (for parameters)
 
-### TODO
+
+<!-- ABOUT THE PROJECT -->
+## About DogID App
+
+A full stack mobile app that identifies dog breeds and gives a summary of the breed
+using our [convolutional neural network (https://github.com/harrisonchiu/dogid-model)](https://github.com/harrisonchiu/dogid-model).
+
+The app allows users to take a photo with their camera which will identify the breed of
+the dog in that photo. A summary of the breed is also given to the user which includes:
+- Origin and history
+- Breed group
+- Physical description
+- Usual temperament
+- Average lifespan, weight, height, friendliness, energy level, and grooming needs
+
+DogID allows users to voluntarily send data to a public PostgreSQL database through our
+Node.js and Express RESTful [API (https://github.com/harrisonchiu/dogid-api)](https://github.com/harrisonchiu/dogid-api).
+
+Only the image data in base64 string format and the user inputted label is sent.
+Check the code, it is open-sourced; our code itself does not send any other information
+(although you would also have to trust the dependencies which can be found in `yarn.lock`).
+
+### DogID Mobile App Built With
+- TypeScript
+- React Native
+
+### RESTful API Backend Built With
+- Node.js
+- Express.js framework
+- PostgreSQL
+- Heroku
+
+
+<!-- GETTING STARTED -->
+## Set Up Locally
+
+To get a local copy up and running follow these simple steps.
+
+1. Clone the repo
+    ```sh
+    git clone https://github.com/harrisonchiu/dogid-app.git
+    ```
+2. Install NPM packages
+    ```sh
+    yarn install
+    ```
+3. Build
+    ```sh
+    npm build
+    ```
+
+
+<!-- ROADMAP -->
+## Roadmap
 - [x] Camera options
     - Zoom, flash, ratios, front camera, save image
 - [ ] Details screen of dog
     - Can search for other dogs
     - Save user searches locally
-- [ ] Finish UI
+- [x] Finish UI
 - [ ] Option to use locally saved image
 - [ ] Detect when image probably does not contain a dog
 - [ ] API to optionally send images or other data if prediction is incorrect/correct, to increase dataset
@@ -33,3 +111,5 @@ Exceptions to Google's and Airbnb's Style Guide:
     - Detects on captured video
     - Detects on local saved picture and video
     - Detects on streamed camera data
+
+See the [open issues](https://github.com/harrisonchiu/dogid-app/issues) for a list of proposed features (and known issues).
