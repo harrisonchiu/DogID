@@ -7,14 +7,14 @@
 
   <h1 align="center">DogID Mobile App</h1>
 
-  <p align="center">
+  <h3 align="center">
     React Native app that identifies different dog breeds
     <br />
     <br />
     <a href="https://github.com/harrisonchiu/dogid-model">DogID Model (Neural Network Model)</a>
     ·
     <a href="https://github.com/harrisonchiu/dogid-api">DogID API (Backend API)</a>
-  </p>
+  </h3>
 </p>
 
 
