@@ -33,6 +33,9 @@
       </ul>
     </li>
     <li>
+      <a href="app-demo">App Demo</a>
+    </li>
+    <li>
       <a href="#set-up-locally">Set Up Locally</a>
     </li>
     <li>
@@ -75,7 +78,7 @@ Check the code, it is open-sourced; our code itself does not send any other info
 - Heroku
 
 
-## Demo
+## App Demo
 
 https://user-images.githubusercontent.com/32177072/134792987-5ffacbaa-79e0-4017-b298-7d045b5058f4.mp4
 
