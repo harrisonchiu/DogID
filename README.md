@@ -33,7 +33,7 @@
       </ul>
     </li>
     <li>
-      <a href="app-demo">App Demo</a>
+      <a href="#app-demo">App Demo</a>
     </li>
     <li>
       <a href="#set-up-locally">Set Up Locally</a>
