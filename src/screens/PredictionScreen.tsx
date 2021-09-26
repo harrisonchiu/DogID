@@ -16,7 +16,7 @@ import Breed from '@components/Breed';
 import ClassifyImage from '@actions/ClassifyImage';
 import PredictionCards from '@components/PredictionCards';
 
-const loadingAnimation = require('@assets/like.json')
+const loadingAnimation = require('@assets/loading-animation.json')
 
 
 interface Props {
@@ -165,6 +165,7 @@ class PredictionScreen extends Component<Props, States> {
                 <Animated.View
                     style={{
                         alignItems: 'center',
+                        justifyContent: 'center',
                         backgroundColor: Colours.gray[200],
                         height: this.state.bottomBarFinalHeight,
                         transform: [{ translateY: this.bottomBarAnimation }],
@@ -226,7 +227,24 @@ class PredictionScreen extends Component<Props, States> {
                             />
                         </Animated.ScrollView>
                     ) : (
-                        <LottieView source={loadingAnimation} autoPlay loop />
+                        <View
+                            style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <LottieView
+                                style={{
+                                    alignItems: 'center',
+                                    height: '80%',
+                                    width: '80%',
+                                }}
+                                source={loadingAnimation}
+                                autoPlay
+                                loop
+                            />
+                        </View>
                     )}
                 </Animated.View>
             </View>

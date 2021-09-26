@@ -75,6 +75,11 @@ Check the code, it is open-sourced; our code itself does not send any other info
 - Heroku
 
 
+## Demo
+
+![](docs/dogid-demo.mp4)
+
+
 <!-- GETTING STARTED -->
 ## Set Up Locally
 
@@ -91,6 +96,10 @@ To get a local copy up and running follow these simple steps.
 3. Build
     ```sh
     npm build
+    ```
+    OR if expo installed
+    ```sh
+    expo start
     ```
 
 

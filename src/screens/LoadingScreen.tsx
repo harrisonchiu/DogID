@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    StatusBar
+    Image,
+    StatusBar,
 } from 'react-native';
 
 import { Camera } from 'expo-camera';
@@ -10,10 +11,10 @@ import LottieView from "lottie-react-native";
 
 import { Logger } from '@actions/Log';
 import { Colours } from '@config/Colours';
+import { Normalizer } from '@actions/Normalize';
 import { loadTensorflow, loadModel } from '@actions/LoadAssets';
 
-
-const loadingAnimation = require('@assets/like.json')
+const loadingAnimation = require('@assets/searching-animation.json')
 
 
 interface Props {
@@ -68,16 +69,49 @@ class LoadingScreen extends Component<Props, States> {
             <View
                 style={{
                     flex: 1,
+                    flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: Colours.green[400],
                 }}
             >
                 <StatusBar hidden />
+                <View
+                    style={{
+                        width: '95%',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
+                >
+                    <LottieView
+                        style={{
+                            width: '35%',
+                        }}
+                        source={loadingAnimation}
+                        autoPlay
+                        loop
+                    />
+                    <Text
+                        style={{
+                            fontSize: Normalizer.fontPixel(230),
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        DogID
+                    </Text>
+                </View>
+
                 {this.state.isCameraPermitted === true ? (
-                    <LottieView source={loadingAnimation} autoPlay loop />
+                    <View />
                 ) : (
-                    <Text style={{ fontSize: 32, textAlign: 'center' }}>Camera NOT PERMITTED</Text>
+                    <Text
+                        style={{
+                            fontSize: 32,
+                            textAlign: 'center'
+                        }}
+                    >
+                        Camera NOT PERMITTED
+                    </Text>
                 )}
             </View>
         );
