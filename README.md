@@ -77,7 +77,7 @@ Check the code, it is open-sourced; our code itself does not send any other info
 
 ## Demo
 
-![](docs/dogid-demo.mp4)
+https://user-images.githubusercontent.com/32177072/134792987-5ffacbaa-79e0-4017-b298-7d045b5058f4.mp4
 
 
 <!-- GETTING STARTED -->
