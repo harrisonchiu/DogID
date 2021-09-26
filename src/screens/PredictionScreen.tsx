@@ -16,7 +16,7 @@ import Breed from '@components/Breed';
 import ClassifyImage from '@actions/ClassifyImage';
 import PredictionCards from '@components/PredictionCards';
 
-const loadingAnimation = require('@assets/loading-animation.json')
+const loadingAnimation = require('@assets/magnifier-searching-animation.json')
 
 
 interface Props {

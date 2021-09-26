@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Image,
     StatusBar,
 } from 'react-native';
 
@@ -14,7 +13,7 @@ import { Colours } from '@config/Colours';
 import { Normalizer } from '@actions/Normalize';
 import { loadTensorflow, loadModel } from '@actions/LoadAssets';
 
-const loadingAnimation = require('@assets/searching-animation.json')
+const loadingAnimation = require('@assets/magnifier-waving-animation.json')
 
 
 interface Props {

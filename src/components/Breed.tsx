@@ -1,6 +1,6 @@
-import { BreedPictures } from '@components/BreedPictures';
+import { BreedPictures } from '@root/src/config/BreedPictures';
 
-const data: BreedInformationType = require('@components/BreedInformation.json')
+const data: BreedInformationType = require('@config/BreedInformation.json')
 
 // Json data structure
 interface BreedInformationType {

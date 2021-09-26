@@ -2,7 +2,7 @@ import * as tf from '@tensorflow/tfjs';
 import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
 
 import { Logger } from '@actions/Log';
-import { BreedNames } from '../components/BreedNames';
+import { BreedNames } from '@config/BreedNames';
 
 const modelJson = require('@assets/Models/efficientnetb1-noisystudent-tfjs/model.json');
 const modelWeights: any[] = [

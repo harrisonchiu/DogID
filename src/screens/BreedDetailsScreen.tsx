@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View,
     Animated,
-    ScrollView,
     StatusBar,
 } from 'react-native';
 import {
