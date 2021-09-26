@@ -5,7 +5,7 @@ Models/
 package-lock.json
 
 # Ignore breed data for now
-BreedInformation.json
+# BreedInformation.json
 
 # Built application files
 *.apk
